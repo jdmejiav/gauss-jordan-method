@@ -8,5 +8,7 @@ Equation solver using Gauss Jordan method for nxn variables built on Rust
     $ cargo run
 
 #### Using Rustup:
+
 go to src/ and
+
     $ rustc main.rs
