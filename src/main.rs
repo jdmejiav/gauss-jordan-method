@@ -49,31 +49,31 @@ fn main() {
 }
 
 fn print_matrix(_matrix: &Vec<Vec<Fraction>>) {
-    for _i in _matrix.iter() {
+    for i in _matrix.iter() {
         print!("\n|\t");
-        for _j in 0.._i.len() {
-            if _i.len() - 1 == _j {
+        for j in 0..i.len() {
+            if i.len() - 1 == j {
                 print!(":\t");
             }
-            print!("{}/{}\t", _i[_j].get_numerator(), _i[_j].get_denominator());
+            print!("{}/{}\t", i[j].get_numerator(), i[j].get_denominator());
         }
         println!("|");
     }
 }
 
 fn gauss_jordan(mut _matrix: Vec<Vec<Fraction>>) -> Vec<Vec<Fraction>> {
-    for _it in 0.._matrix.len() {
-        _matrix = find_pibot(_it, _matrix);
-        if _matrix[_it][_it].value() == 0 as f64 {
+    for it in 0.._matrix.len() {
+        _matrix = find_pibot(it, _matrix);
+        if _matrix[it][it].value() == 0 as f64 {
             println!("It is not possible to solve");
         } else {
-            for _i in 0.._matrix.len() {
-                if _i != _it {
-                    let _multiplier = fraction::div(&_matrix[_it][_it], &_matrix[_i][_it]);
-                    for _k in 0.._matrix[_i].len() {
-                        _matrix[_i][_k] = fraction::dif(
-                            &_matrix[_it][_k],
-                            &fraction::mult(&_matrix[_i][_k], &_multiplier),
+            for i in 0.._matrix.len() {
+                if i != it {
+                    let _multiplier = fraction::div(&_matrix[it][it], &_matrix[i][it]);
+                    for _k in 0.._matrix[i].len() {
+                        _matrix[i][_k] = fraction::dif(
+                            &_matrix[it][_k],
+                            &fraction::mult(&_matrix[i][_k], &_multiplier),
                         );
                     }
                 }
@@ -86,13 +86,13 @@ fn gauss_jordan(mut _matrix: Vec<Vec<Fraction>>) -> Vec<Vec<Fraction>> {
     _matrix
 }
 
-fn find_pibot(_idx: usize, mut _matrix: Vec<Vec<Fraction>>) -> Vec<Vec<Fraction>> {
-    if _matrix[_idx][_idx].value() == 0 as f64 {
-        for _i in _idx.._matrix.len() {
-            if _matrix[_i][_idx].value() == 0 as f64 {
+fn find_pibot(idx: usize, mut _matrix: Vec<Vec<Fraction>>) -> Vec<Vec<Fraction>> {
+    if _matrix[idx][idx].value() == 0 as f64 {
+        for i in idx.._matrix.len() {
+            if _matrix[i][idx].value() == 0 as f64 {
                 continue;
             } else {
-                _matrix.swap(_idx, _i);
+                _matrix.swap(idx, i);
                 break;
             }
         }
@@ -102,8 +102,8 @@ fn find_pibot(_idx: usize, mut _matrix: Vec<Vec<Fraction>>) -> Vec<Vec<Fraction>
 
 fn find_solutions(_matrix: Vec<Vec<Fraction>>) -> Vec<Fraction> {
     let mut temp: Vec<Fraction> = Vec::new();
-    for _i in 0.._matrix.len() {
-        let x_i = fraction::div(&_matrix[_i][_matrix[_i].len() - 1], &_matrix[_i][_i]);
+    for i in 0.._matrix.len() {
+        let x_i = fraction::div(&_matrix[i][_matrix[i].len() - 1], &_matrix[i][i]);
         temp.push(x_i);
     }
     temp
@@ -111,11 +111,11 @@ fn find_solutions(_matrix: Vec<Vec<Fraction>>) -> Vec<Fraction> {
 
 fn print_vec_solution(_vec: &Vec<Fraction>) {
     let mut out = String::new();
-    for _i in 0.._vec.len() {
+    for i in 0.._vec.len() {
         out.push_str("x_");
-        out.push_str(&_i.to_string());
+        out.push_str(&i.to_string());
         out.push_str(" = ");
-        out.push_str(&_vec[_i].value().to_string());
+        out.push_str(&_vec[i].value().to_string());
         out.push_str("   ");
     }
 
